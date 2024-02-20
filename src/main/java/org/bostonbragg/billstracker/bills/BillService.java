@@ -8,30 +8,26 @@ import java.util.UUID;
 
 @Component
 public class BillService {
-    private BillRepository repository;
+    private final BillRepository repository;
 
     @Autowired
     public BillService(BillRepository repository) {
         this.repository = repository;
     }
 
-    Bill createBill(Bill bill) {
-        return repository.createBill(bill);
+    Bill save(Bill bill) {
+        return repository.save(bill);
     }
 
-    List<Bill> getBills() {
-        return repository.getBills();
+    List<Bill> findAll() {
+        return repository.findAll();
     }
 
-    Bill getBillById(UUID id) {
-        return repository.getBillById(id).orElseThrow();
+    Bill findById(UUID id) {
+        return repository.findById(id).orElseThrow();
     }
 
-    Bill modifyBill(UUID id, Bill bill) {
-        return repository.modifyBill(id, bill).orElseThrow();
-    }
-
-    void deleteBill(UUID id) {
-        repository.deleteBill(id);
+    void delete(UUID id) {
+        repository.delete(findById(id));
     }
 }

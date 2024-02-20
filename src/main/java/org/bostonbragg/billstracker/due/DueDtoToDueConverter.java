@@ -7,6 +7,6 @@ import org.springframework.stereotype.Component;
 public class DueDtoToDueConverter extends Converter<DueDto, Due> {
     @Override
     protected Due apply(DueDto dueDto) {
-        return new Due.Builder().paymentFrequency(dueDto.getPaymentFrequency()).dayOfTheWeek(dueDto.getDayOfTheWeek()).dateOfTheMonth(dueDto.getDateOfTheMonth()).monthOfTheYear(dueDto.getMonthOfTheYear()).build();
+        return Due.builder().paymentFrequency(dueDto.getPaymentFrequency()).dayOfTheWeek(dueDto.getDayOfTheWeek()).dateOfTheMonth(dueDto.getDateOfTheMonth()).monthOfTheYear(dueDto.getMonthOfTheYear()).build();
     }
 }

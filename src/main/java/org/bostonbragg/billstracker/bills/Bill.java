@@ -1,6 +1,8 @@
 package org.bostonbragg.billstracker.bills;
 
+import jakarta.persistence.*;
 import org.bostonbragg.billstracker.due.Due;
+import org.hibernate.envers.Audited;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
@@ -9,15 +11,32 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Component
+@Entity
+@Table(name = "bill")
+@SecondaryTable(name = "due", pkJoinColumns = @PrimaryKeyJoinColumn(name = "bill_id"))
+@Audited
 public class Bill {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id")
     @NonNull private UUID id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "amount")
     private double amount;
+
+    @Embedded
     private Due due;
+
+    @Column(name = "start_date")
     private Date startDate;
+
+    @Column(name = "end_date")
     private Date endDate;
 
-    public Bill(Builder builder) {
+    Bill(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
         this.amount = builder.amount;
@@ -25,6 +44,8 @@ public class Bill {
         this.startDate = builder.startDate;
         this.endDate = builder.endDate;
     }
+
+    Bill(){}
 
     public UUID getId() {
         return id;
@@ -97,6 +118,10 @@ public class Bill {
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 '}';
+    }
+
+    public static Builder builder() {
+        return new Builder();
     }
 
     @Component

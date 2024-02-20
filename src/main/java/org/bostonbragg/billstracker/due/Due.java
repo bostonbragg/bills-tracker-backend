@@ -1,11 +1,25 @@
 package org.bostonbragg.billstracker.due;
 
+import jakarta.persistence.*;
+import org.hibernate.envers.Audited;
+import org.springframework.stereotype.Component;
+
 import java.util.Objects;
 
+@Component
+@Embeddable
+@Audited
 public class Due {
+    @Column(name = "payment_frequency", table = "due")
     private PaymentFrequencyEnum paymentFrequency;
+
+    @Column(name = "day_of_the_week", table = "due")
     private DayOfTheWeekEnum dayOfTheWeek;
+
+    @Column(name = "date_of_the_month", table = "due")
     private int dateOfTheMonth;
+
+    @Column(name = "month_of_the_year", table = "due")
     private int monthOfTheYear;
 
     public Due(Builder builder) {
@@ -14,6 +28,8 @@ public class Due {
         this.dateOfTheMonth = builder.dateOfTheMonth;
         this.monthOfTheYear = builder.monthOfTheYear;
     }
+
+    Due(){}
 
     public PaymentFrequencyEnum getPaymentFrequency() {
         return paymentFrequency;
@@ -68,6 +84,10 @@ public class Due {
                 ", dateOfTheMonth=" + dateOfTheMonth +
                 ", monthOfTheYear=" + monthOfTheYear +
                 '}';
+    }
+
+    public static Builder builder() {
+        return new Builder();
     }
 
     public static class Builder {

@@ -18,6 +18,6 @@ public class BillDtoToBillConverter extends Converter<BillDto, Bill> {
 
     @Override
     protected Bill apply(BillDto billDto) {
-        return new Bill.Builder().id(billDto.getId()).name(billDto.getName()).amount(billDto.getAmount()).due(converter.convert(billDto.getDue(), Due.class)).startDate(billDto.getStartDate()).endDate(billDto.getEndDate()).build();
+        return Bill.builder().id(billDto.getId()).name(billDto.getName()).amount(billDto.getAmount()).due(converter.convert(billDto.getDue(), Due.class)).startDate(billDto.getStartDate()).endDate(billDto.getEndDate()).build();
     }
 }
